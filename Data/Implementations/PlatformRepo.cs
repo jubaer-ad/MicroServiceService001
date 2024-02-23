@@ -12,7 +12,7 @@ namespace PlatformService.Data.Interfaces
             try
             {
                 ArgumentNullException.ThrowIfNull(platform);
-                _ = _context.Platforms.Add(platform);
+                var res = _context.Platforms.Add(platform);
                 return true;
             }
             catch (System.Exception)
