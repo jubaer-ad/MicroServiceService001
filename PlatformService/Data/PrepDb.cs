@@ -29,6 +29,12 @@ namespace PlatformService.Data
                         Name = "SQL Server",
                         Publisher = "Microsoft",
                         Cost = "Free"
+                    },
+                    new Platform()
+                    {
+                        Name = "Kubernetes",
+                        Publisher = "Cloud Native Computing Foundation",
+                        Cost = "Free"
                     }
                 );
 
