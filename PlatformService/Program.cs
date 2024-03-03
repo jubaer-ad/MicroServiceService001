@@ -12,10 +12,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>(opt =>
+if (builder.Environment.IsProduction())
 {
-    opt.UseInMemoryDatabase("InMem");
-});
+    System.Console.WriteLine("--->Using SqlServer DB");
+    builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("PlatformsConn")));
+}
+else
+{
+    System.Console.WriteLine("--->Using InMem DB");
+    builder.Services.AddDbContext<AppDbContext>(opt =>
+        opt.UseInMemoryDatabase("InMem"));
+}
+System.Console.WriteLine($"CommandService Endpoint: {builder.Configuration.GetSection("CommandServiceUri").Value}");
 
 var app = builder.Build();
 
@@ -31,5 +40,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-PrepDb.PrepPopulation(app);
+PrepDb.PrepPopulation(app, builder.Environment.IsProduction());
 app.Run();
