@@ -8,13 +8,12 @@ namespace PlatformService.Data
         public static void PrepPopulation(IApplicationBuilder app, bool isProduction)
         {
             using var serviceScope = app.ApplicationServices.CreateScope();
-            var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-            ArgumentNullException.ThrowIfNull(context);
-            SeedData(context, isProduction);
+            SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>(), isProduction);
         }
 
-        private async static void SeedData(AppDbContext context, bool isProduction)
+        private async static void SeedData(AppDbContext? context, bool isProduction)
         {
+            ArgumentNullException.ThrowIfNull(context);
             if (isProduction)
             {
                 System.Console.WriteLine("---> Attempting to applying migration...");
