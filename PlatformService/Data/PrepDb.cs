@@ -13,14 +13,14 @@ namespace PlatformService.Data
             SeedData(context, isProduction);
         }
 
-        private static void SeedData(AppDbContext context, bool isProduction)
+        private async static void SeedData(AppDbContext context, bool isProduction)
         {
             if (isProduction)
             {
                 System.Console.WriteLine("---> Attempting to applying migration...");
                 try
                 {
-                    context.Database.MigrateAsync();
+                    await context.Database.MigrateAsync();
                     System.Console.WriteLine("---> Migration applied successfully...");
                 }
                 catch (Exception ex)
