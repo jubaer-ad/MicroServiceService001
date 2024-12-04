@@ -1,4 +1,5 @@
 using PlatformService.Data.Interfaces;
+using PlatformService.SyncDataServices.http;
 
 namespace PlatformService
 {
@@ -7,6 +8,7 @@ namespace PlatformService
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IPlatformRepo, PlatformRepo>();
+            services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
         }
     }
 }
